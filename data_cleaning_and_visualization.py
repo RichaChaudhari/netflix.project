@@ -167,16 +167,16 @@ observation:
 2. India released much lower TV Show in compare to movies.
 """
 
-#let's make the area plot based on country and rating
-country = data[['country', 'type - movie', 'type TV Show', 'rating']]
-top_5_movie = country.groupby(['country','rating'], as_index = False).sum()
+#let's make the bar graph based on rating
+country = data[['type - movie', 'rating','type TV Show']]
+top_10_movie = country.groupby(['rating'], as_index = False).sum()
 #top 5 countries who released most movies
-top_5_movie.sort_values(['type - movie'], ascending = False, axis = 0, inplace = True)
-top5 = top_5_movie.head(5)
-top5.set_index("country", inplace = True)
-print(top5)
-top5.plot(kind = 'area', stacked = False, figsize = (20, 10))
-plt.title("area plot of top 5 movie release and their ratings and countries")
+top_10_movie.sort_values(['type - movie'], ascending = False, axis = 0, inplace = True)
+top10 = top_10_movie.head(10)
+top10.set_index("rating", inplace = True)
+print(top10)
+top10.plot(kind = 'bar', stacked = False, figsize = (20, 10))
+plt.title("area plot of top 10 movie and Tv show release by rating ")
 plt.xlabel("ratings")
 plt.ylabel("no. of movies or TV Show released")
 """
@@ -188,7 +188,7 @@ observation:
 data['release_year'].plot(kind = 'hist', figsize = (8,5))
 #let's create bar graph for the top 5 countries movie- wise
 bar_countries = data[['country', 'type - movie', 'type TV Show']]
-bar_country = hist_countries.groupby(['country']).sum()
+bar_country = bar_countries.groupby(['country']).sum()
 bar_country.sort_values(['type - movie'], ascending = False, inplace = True)
 top = bar_country.head(5).transpose()
 print(top)
